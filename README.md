@@ -1,38 +1,33 @@
-# Requirments
+# ZenpyScripts
 
-[Zenpy](https://github.com/facetoe/zenpy)
+Sample scripts for Zendesk Administrators utilising [Zenpy](https://github.com/facetoe/zenpy) library
 
-## Installation
+## Close Solved Tickets
 
-pip install zenpy
+Usage: python3 close_tickets.py
 
-# Help Center Migration
+Recommended for Sandbox only. The script closes all solved tickets. Useful before making changes to users and organizations.
+
+## Help Center Migration
+
+Usage: python3 hc_migration.py
 
 The script copies guide categories, sections, articles, translations, permission groups, and user segments to any destination instance
 
-## Usage
+## Incident Monitoring Report
 
-python3 hc_migration.py
+Usage: python3 incidents_report.py [-h] [-s SUBDOMAIN] [-o OAUTHTOKEN] [-u USERNAME] [-p PASSWORD] [-t APITOKEN] [--start STARTDATE]
+[--end ENDDATE]
 
-# Zendesk Incident Monitoring
+Sample Zenpy Script to create CSV report of number of incidents per problem ticket. Credentials can be configured in .env file or
+overriden through optional arguments.
 
-The script sets a workflow to address service incidents on Zendesk as follows:
-
-1. Create a dynamic macro to send information according to exiting tags.
-2. Create an problem ticket with with issue details and agent instructions
-3. Create a webhook targeting Zendesk tickets API, if none is present
-4. Create a trigger to link incident tickets to problem ticket when updated with incident tag
-5. Create a view to monitor problem and incidents, if not present
-
-## Usage
-
-1. Set tickets_webhook to the id string, if present.
-2. Set incident_monitoring_view to the Zenpy view api object, if present
-3. Replace the follwing sample variables:
-   - incident_summary
-   - incident_description
-   - incident_tag
-   - custom_tags
-   - macro_html
-   - agent_instructions
-   - followers
+optional arguments:
+-h, --help show this help message and exit
+-s SUBDOMAIN Zendesk Subdomain (e.g. d3v-test)
+-o OAUTHTOKEN Pre-generated OAuth2 token with "tickets:read write" scope
+-u USERNAME Agent Zendesk email address
+-p PASSWORD Agent Zendesk password
+-t APITOKEN
+--start STARTDATE Lower limit of incident ticket creation date (YYYY-MM-DD). Defaults to last week.
+--end ENDDATE Upper limit of incident ticket creation date (YYYY-MM-DD). Defaults to today
